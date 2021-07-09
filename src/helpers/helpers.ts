@@ -8,6 +8,7 @@ import * as dns from 'dns';
 import * as hasbin from 'hasbin';
 import * as log from 'loglevel';
 import { ncp } from 'ncp';
+import fs from 'fs-extra';
 import * as tmp from 'tmp';
 
 import { parseJson } from '../utils/parseUtils';
@@ -62,14 +63,15 @@ export async function copyFileOrDir(
   sourceFileOrDir: string,
   dest: string,
 ): Promise<void> {
-  return new Promise((resolve, reject) => {
-    ncp(sourceFileOrDir, dest, (error: Error[] | null): void => {
-      if (error) {
-        reject(error);
-      }
-      resolve();
-    });
-  });
+  return fs.copy(sourceFileOrDir, dest);
+//   return new Promise((resolve, reject) => {
+//     ncp(sourceFileOrDir, dest, (error: Error[] | null): void => {
+//       if (error) {
+//         reject(error);
+//       }
+//       resolve();
+//     });
+//   });
 }
 
 export function downloadFile(
